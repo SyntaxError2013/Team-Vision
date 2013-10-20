@@ -22,6 +22,46 @@
 using namespace cv;
 using namespace std;
 
+//Declaration of Global Variables
+int equalThreshold=1e-7;
+  
+//Used to compute angle 
+double angle(vector<Point>& contour,int pt,int r)
+{
+	int size = contour.size();
+    Point p0=(pt>0)?contour[pt%size]:contour[size-1+pt];
+    Point p1=contour[(pt+r)%size];
+    Point p2=(pt>r)?contour[pt-r]:contour[size-1-r];
+
+        double ux=p0.x-p1.x;
+        double uy=p0.y-p1.y;
+        double vx=p0.x-p2.x;
+        double vy=p0.y-p2.y;
+        return (ux*vx + uy*vy)/sqrt((ux*ux + uy*uy)*(vx*vx + vy*vy));
+}
+
+//Used to compute coordinates of finger tips
+signed int rotation(std::vector<cv::Point>& contour, int pt, int r)
+{
+        int size = contour.size();
+        Point p0=(pt>0)?contour[pt%size]:contour[size-1+pt];
+        Point p1=contour[(pt+r)%size];
+        Point p2=(pt>r)?contour[pt-r]:contour[size-1-r];
+
+        double ux=p0.x-p1.x;
+        double uy=p0.y-p1.y;
+        double vx=p0.x-p2.x;
+        double vy=p0.y-p2.y;
+        
+		return (ux*vy - vx*uy);
+}
+
+bool isEqual(double a, double b)
+{
+        return fabs(a - b) <= equalThreshold;
+}
+
+
 int main()
 {
 	cout<<"Team- Vision"<<endl;
