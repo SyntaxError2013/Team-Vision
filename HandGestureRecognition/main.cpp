@@ -23,7 +23,7 @@ using namespace cv;
 using namespace std;
 
 //Declaration of Global Variables
-int equalThreshold=1e-7,size=16,r=40;
+int equalThreshold=1e-7,step=16,r=40;
 
 Mat src;
 Mat src_gray, threshold_output,blue,blue_2,im,face_ROI,im2,im3;
